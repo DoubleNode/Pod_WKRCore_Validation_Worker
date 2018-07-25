@@ -20,16 +20,41 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 
 @implementation WKRCore_Validation_Worker
 
-#define ERROR_DOMAIN_CLASS      [NSString stringWithFormat:@"com.doublenode.%@", NSStringFromClass([self class])]
-#define ERROR_UNKNOWN           1001
-#define ERROR_NO_BIRTHDAY       1002
-#define ERROR_BAD_EMAIL         1003
-#define ERROR_TOO_SHORT         1004
-#define ERROR_TOO_WEAK          1005
-#define ERROR_NO_SELECTION      1006
+#define ERROR_DOMAIN_CLASS          [NSString stringWithFormat:@"com.doublenode.%@", NSStringFromClass([self class])]
+#define ERROR_UNKNOWN               1001
+#define ERROR_NO_BIRTHDAY           1002
+#define ERROR_BIRTHDAY_TOO_YOUNG    1003
+#define ERROR_BIRTHDAY_TOO_OLD      1004
+#define ERROR_BAD_EMAIL             1005
+#define ERROR_TOO_SHORT             1006
+#define ERROR_TOO_LONG              1007
+#define ERROR_TOO_LOW               1008
+#define ERROR_TOO_HIGH              1009
+#define ERROR_TOO_WEAK              1010
+#define ERROR_NO_SELECTION          1011
 
 @synthesize nextBaseWorker;
 @synthesize nextValidationWorker;
+
+@synthesize minimumBirthdayAge;
+@synthesize maximumBirthdayAge;
+
+@synthesize minimumHandleLength;
+@synthesize maximumHandleLength;
+
+@synthesize minimumNameLength;
+@synthesize maximumNameLength;
+
+@synthesize minimumNumberValue;
+@synthesize maximumNumberValue;
+
+@synthesize requiredPasswordStrength;
+
+@synthesize minimumPercentageValue;
+@synthesize maximumPercentageValue;
+
+@synthesize minimumUnsignedNumberValue;
+@synthesize maximumUnsignedNumberValue;
 
 + (instancetype _Nonnull)worker   {   return [self worker:nil]; }
 
@@ -94,6 +119,29 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
         return NO;
     }
     
+    NSInteger   age = [self utilityAge:birthday];
+    
+    if (self.minimumBirthdayAge > -1)
+    {
+        if (age < self.minimumBirthdayAge)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_BIRTHDAY_TOO_YOUNG
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Age is too young", nil) }];
+            return NO;
+        }
+    }
+    if (maximumBirthdayAge > -1)
+    {
+        if (age > self.maximumBirthdayAge)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_BIRTHDAY_TOO_OLD
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Age is too old", nil) }];
+            return NO;
+        }
+    }
+    
     return YES;
 }
 
@@ -122,13 +170,25 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidateHandle:(NSString*)handle
                    error:(NSError**)error
 {
-    BOOL    valid = (3 < handle.length);
-    if (!valid)
+    if (self.minimumHandleLength != -1)
     {
-        *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
-                                     code:ERROR_TOO_SHORT
-                                 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Handle is too short", nil) }];
-        return NO;
+        if (handle.length < self.minimumHandleLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_SHORT
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Handle is too short", nil) }];
+            return NO;
+        }
+    }
+    if (self.maximumHandleLength != -1)
+    {
+        if (handle.length < self.maximumHandleLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_LONG
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Handle is too long", nil) }];
+            return NO;
+        }
     }
     
     return YES;
@@ -137,17 +197,32 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidateName:(NSString*)name
                  error:(NSError**)error
 {
-    BOOL    valid = (1 < name.length);
-    if (!valid)
+    if (self.minimumNameLength != -1)
     {
-        *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
-                                     code:ERROR_TOO_SHORT
-                                 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Name is too short", nil) }];
-        return NO;
+        if (name.length < self.minimumNameLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_SHORT
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Name is too short", nil) }];
+            return NO;
+        }
     }
-    
+    if (self.maximumNameLength != -1)
+    {
+        if (name.length < self.maximumNameLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_LONG
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Name is too long", nil) }];
+            return NO;
+        }
+    }
+
     return YES;
 }
+
+//@synthesize minimumNumberValue;
+//@synthesize maximumNumberValue;
 
 - (BOOL)doValidateNumber:(nonnull NSString*)number
                    error:(NSError*_Nullable*_Nullable)error
@@ -164,12 +239,14 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     return YES;
 }
 
+//@synthesize requiredPasswordStrength;
+
 - (BOOL)doValidatePassword:(NSString*)password
                      error:(NSError**)error
 {
     WKRPasswordStrengthType strengthType = [self.passwordStrengthWorker doCheckPasswordStrength:password];
     
-    BOOL    valid = !(strengthType == WKRPasswordStrengthTypeWeak);
+    BOOL    valid = !(strengthType <= self.requiredPasswordStrength);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
@@ -180,6 +257,9 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     
     return YES;
 }
+
+//@synthesize minimumPercentageValue;
+//@synthesize maximumPercentageValue;
 
 - (BOOL)doValidatePercentage:(nonnull NSString*)percentage
                        error:(NSError*_Nullable*_Nullable)error
@@ -224,6 +304,44 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     }
     
     return YES;
+}
+
+//@synthesize minimumUnsignedNumberValue;
+//@synthesize maximumUnsignedNumberValue;
+
+- (BOOL)doValidateUnsignedNumber:(NSString*)number
+                           error:(NSError**)error
+{
+    BOOL    valid = (1 < number.length);
+    if (!valid)
+    {
+        *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                     code:ERROR_TOO_SHORT
+                                 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Number is too short", nil) }];
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - Utility methods
+
+- (NSInteger)utilityAge:(NSDate*)birthday
+{
+    NSCalendar* calendar    = NSCalendar.currentCalendar;
+    unsigned    unitFlags   = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+    NSDateComponents*   dateComponentsNow   = [calendar components:unitFlags
+                                                          fromDate:NSDate.date];
+    NSDateComponents*   dateComponentsBirth = [calendar components:unitFlags
+                                                          fromDate:birthday];
+    
+    if ((dateComponentsNow.month < dateComponentsBirth.month) ||
+        ((dateComponentsNow.month == dateComponentsBirth.month) && (dateComponentsNow.day < dateComponentsBirth.day)))
+    {
+        return (dateComponentsNow.year - dateComponentsBirth.year - 1);
+    }
+
+    return dateComponentsNow.year - dateComponentsBirth.year;
 }
 
 @end
