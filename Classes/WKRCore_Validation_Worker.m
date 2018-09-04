@@ -32,6 +32,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 #define ERROR_TOO_HIGH              1009
 #define ERROR_TOO_WEAK              1010
 #define ERROR_NO_SELECTION          1011
+#define ERROR_INVALID               1012
 
 @synthesize nextBaseWorker;
 @synthesize nextValidationWorker;
@@ -224,16 +225,49 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 //@synthesize minimumNumberValue;
 //@synthesize maximumNumberValue;
 
-- (BOOL)doValidateNumber:(nonnull NSString*)number
+- (BOOL)doValidateNumber:(nonnull NSString*)numberString
                    error:(NSError*_Nullable*_Nullable)error
 {
-    BOOL    valid = (1 < number.length);
+    BOOL    valid = (1 < numberString.length);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
                                      code:ERROR_TOO_SHORT
                                  userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Number is too short", nil) }];
         return NO;
+    }
+    
+    NSNumberFormatter*  formatter = [NSNumberFormatter.alloc init];
+    formatter.numberStyle   = NSNumberFormatterDecimalStyle;
+    NSNumber*   number = [formatter numberFromString:numberString];
+    if (!number)
+    {
+        *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                     code:ERROR_INVALID
+                                 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Number is invalid", nil) }];
+        return NO;
+    }
+    
+    if (self.minimumNumberValue != INT_MAX)
+    {
+        if (number.integerValue < self.minimumNumberValue)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_LOW
+                                     userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Number is less than %u", nil), self.minimumNumberValue] }];
+            return NO;
+        }
+    }
+    
+    if (self.maximumNumberValue != INT_MAX)
+    {
+        if (number.integerValue > self.maximumNumberValue)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_HIGH
+                                     userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"Number is greater than %u", nil), self.maximumNumberValue] }];
+            return NO;
+        }
     }
     
     return YES;
