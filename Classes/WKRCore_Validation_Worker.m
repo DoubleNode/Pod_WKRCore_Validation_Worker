@@ -54,6 +54,9 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 @synthesize minimumPercentageValue;
 @synthesize maximumPercentageValue;
 
+@synthesize minimumPhoneLength;
+@synthesize maximumPhoneLength;
+
 @synthesize minimumUnsignedNumberValue;
 @synthesize maximumUnsignedNumberValue;
 
@@ -280,7 +283,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 {
     WKRPasswordStrengthType strengthType = [self.passwordStrengthWorker doCheckPasswordStrength:password];
     
-    BOOL    valid = !(strengthType <= self.requiredPasswordStrength);
+    BOOL    valid = !(strengthType < self.requiredPasswordStrength);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
@@ -305,6 +308,36 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
                                      code:ERROR_TOO_SHORT
                                  userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Percentage is too short", nil) }];
         return NO;
+    }
+    
+    return YES;
+}
+
+//@synthesize minimumPhoneLength;
+//@synthesize maximumPhoneLength;
+
+- (BOOL)doValidatePhone:(nonnull NSString*)phone
+                  error:(NSError*_Nullable*_Nullable)error
+{
+    if (self.minimumPhoneLength != -1)
+    {
+        if (phone.length < self.minimumPhoneLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_SHORT
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Phone Number is too short", nil) }];
+            return NO;
+        }
+    }
+    if (self.maximumPhoneLength != -1)
+    {
+        if (phone.length < self.maximumPhoneLength)
+        {
+            *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                         code:ERROR_TOO_LONG
+                                     userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Phone Number is too long", nil) }];
+            return NO;
+        }
     }
     
     return YES;
