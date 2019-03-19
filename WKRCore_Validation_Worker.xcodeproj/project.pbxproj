@@ -16,7 +16,6 @@
 		6AE0D0191DF89A90009727C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE0D0171DF89A90009727C1 /* LaunchScreen.storyboard */; };
 		6AE0D0241DF89A90009727C1 /* WKRCore_Validation_WorkerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0D0231DF89A90009727C1 /* WKRCore_Validation_WorkerTests.m */; };
 		6AE0D02F1DF89A90009727C1 /* WKRCore_Validation_WorkerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0D02E1DF89A90009727C1 /* WKRCore_Validation_WorkerUITests.m */; };
-		6AE0D0411DF89AF0009727C1 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0D03E1DF89AF0009727C1 /* README.md */; };
 		6AE0D0421DF89AF0009727C1 /* WKRCore_Validation_Worker.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 6AE0D03F1DF89AF0009727C1 /* WKRCore_Validation_Worker.podspec */; };
 		6AE0D0461DF89C2E009727C1 /* WKRCore_Validation_Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE0D0451DF89C2E009727C1 /* WKRCore_Validation_Worker.m */; };
 		E0DB20C3A780F5F5A0AB5888 /* Pods_WKRCore_Validation_Worker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 763EF22F612AD961F8499437 /* Pods_WKRCore_Validation_Worker.framework */; };
@@ -265,7 +264,7 @@
 		6AE0CFFE1DF89A8F009727C1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = DoubleNode.com;
 				TargetAttributes = {
 					6AE0D0051DF89A8F009727C1 = {
@@ -293,6 +292,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -343,7 +343,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WKRCore_Validation_Worker/Pods-WKRCore_Validation_Worker-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WKRCore_Validation_Worker/Pods-WKRCore_Validation_Worker-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/ColorUtils/ColorUtils.framework",
 				"${BUILT_PRODUCTS_DIR}/DNCProtocols/DNCProtocols.framework",
@@ -364,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WKRCore_Validation_Worker/Pods-WKRCore_Validation_Worker-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WKRCore_Validation_Worker/Pods-WKRCore_Validation_Worker-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		979E7A3C62953E752D9290C1 /* [CP] Check Pods Manifest.lock */ = {
@@ -391,7 +391,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WKRCore_Validation_WorkerTests/Pods-WKRCore_Validation_WorkerTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WKRCore_Validation_WorkerTests/Pods-WKRCore_Validation_WorkerTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Gizou/Gizou.framework",
 				"${BUILT_PRODUCTS_DIR}/OCMock/OCMock.framework",
 			);
@@ -402,7 +402,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WKRCore_Validation_WorkerTests/Pods-WKRCore_Validation_WorkerTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WKRCore_Validation_WorkerTests/Pods-WKRCore_Validation_WorkerTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BF016C85F9B29BABFD61EA25 /* [CP] Check Pods Manifest.lock */ = {
@@ -432,7 +432,6 @@
 			files = (
 				6AE0D0111DF89A90009727C1 /* ViewController.m in Sources */,
 				6AE0D00E1DF89A90009727C1 /* AppDelegate.m in Sources */,
-				6AE0D0411DF89AF0009727C1 /* README.md in Sources */,
 				6AE0D00B1DF89A90009727C1 /* main.m in Sources */,
 				6AE0D0461DF89C2E009727C1 /* WKRCore_Validation_Worker.m in Sources */,
 			);
@@ -493,20 +492,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -541,20 +550,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -589,7 +608,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleNode.WKRCore-Validation-Worker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -603,7 +622,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleNode.WKRCore-Validation-Worker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
