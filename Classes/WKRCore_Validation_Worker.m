@@ -231,7 +231,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidateNumber:(nonnull NSString*)numberString
                    error:(NSError*_Nullable*_Nullable)error
 {
-    BOOL    valid = (1 < numberString.length);
+    BOOL    valid = (0 < numberString.length);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
@@ -301,7 +301,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidatePercentage:(nonnull NSString*)percentage
                        error:(NSError*_Nullable*_Nullable)error
 {
-    BOOL    valid = (1 < percentage.length);
+    BOOL    valid = (0 < percentage.length);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
@@ -379,7 +379,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidateUnsignedNumber:(NSString*)number
                            error:(NSError**)error
 {
-    BOOL    valid = (1 < number.length);
+    BOOL    valid = (0 < number.length);
     if (!valid)
     {
         *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS

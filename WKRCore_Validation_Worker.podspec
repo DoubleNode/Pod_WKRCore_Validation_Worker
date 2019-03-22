@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "WKRCore_Validation_Worker"
-  s.version      = "0.3.2"
+  s.version      = "0.3.3"
   s.summary      = "A Core Validation Worker."
 
   s.description  = <<-DESC
