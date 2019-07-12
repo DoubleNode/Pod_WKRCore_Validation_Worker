@@ -319,6 +319,22 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
 - (BOOL)doValidatePhone:(nonnull NSString*)phone
                   error:(NSError*_Nullable*_Nullable)error
 {
+    //Create a regex string
+    NSString*   stricterFilterString = @"\\d{3}\\d{3}\\d{4}";
+    
+    //Create predicate with format matching your regex string
+    NSPredicate*    phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", stricterFilterString];
+    
+    //return true if email address is valid
+    BOOL    valid = [phoneTest evaluateWithObject:phone];
+    if (!valid)
+    {
+        *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
+                                     code:ERROR_BAD_EMAIL
+                                 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Invalid phone number", nil) }];
+        return NO;
+    }
+    
     if (self.minimumPhoneLength != -1)
     {
         if (phone.length < self.minimumPhoneLength)
