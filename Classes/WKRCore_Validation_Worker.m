@@ -186,7 +186,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     }
     if (self.maximumHandleLength != -1)
     {
-        if (handle.length < self.maximumHandleLength)
+        if (handle.length > self.maximumHandleLength)
         {
             *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
                                          code:ERROR_TOO_LONG
@@ -213,7 +213,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     }
     if (self.maximumNameLength != -1)
     {
-        if (name.length < self.maximumNameLength)
+        if (name.length > self.maximumNameLength)
         {
             *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
                                          code:ERROR_TOO_LONG
@@ -347,7 +347,7 @@ NSString* const kWkrRegexPasswordOneSymbol      = @"^(?=.*[!@#$%&_]).*$";   // S
     }
     if (self.maximumPhoneLength != -1)
     {
-        if (phone.length < self.maximumPhoneLength)
+        if (phone.length > self.maximumPhoneLength)
         {
             *error = [NSError errorWithDomain:ERROR_DOMAIN_CLASS
                                          code:ERROR_TOO_LONG
