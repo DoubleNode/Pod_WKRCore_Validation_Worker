@@ -1,9 +1,11 @@
 //
 //  WKRValidation_Worker.m
-//  DoubleNode Core
+//  DoubleNode Core Validation Worker
 //
 //  Created by Darren Ehlers on 2016/10/16.
-//  Copyright © 2016 Darren Ehlers and DoubleNode, LLC. All rights reserved.
+//  Copyright © 2016 Darren Ehlers and DoubleNode, LLC.
+//
+//  WKRCore_Validation_Worker is released under the MIT license. See LICENSE for details.
 //
 
 #import <DNCore/DNCUtilities.h>

@@ -41,6 +41,7 @@
 /* Begin PBXFileReference section */
 		2C3727B1C9B47DF1D56DFD61 /* Pods-WKRCore_Validation_WorkerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WKRCore_Validation_WorkerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WKRCore_Validation_WorkerTests/Pods-WKRCore_Validation_WorkerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4FA5DE3F46CAB193439B38F8 /* Pods-WKRCore_Validation_Worker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WKRCore_Validation_Worker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WKRCore_Validation_Worker/Pods-WKRCore_Validation_Worker.debug.xcconfig"; sourceTree = "<group>"; };
+		6AC77C68231867A1004EF336 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		6AE0D0061DF89A8F009727C1 /* WKRCore_Validation_Worker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKRCore_Validation_Worker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE0D00A1DF89A90009727C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6AE0D00C1DF89A90009727C1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 		6AE0D03C1DF89ADD009727C1 /* Cocoapod */ = {
 			isa = PBXGroup;
 			children = (
+				6AC77C68231867A1004EF336 /* LICENSE */,
 				6AE0D03E1DF89AF0009727C1 /* README.md */,
 				6AE0D03F1DF89AF0009727C1 /* WKRCore_Validation_Worker.podspec */,
 				6AE0D0431DF89C22009727C1 /* Classes */,
